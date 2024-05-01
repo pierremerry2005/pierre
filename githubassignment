@@ -1,0 +1,29 @@
+import sys
+
+def caesar_cipher(text, shift):
+    encrypted_text = ""
+    for char in text.upper():
+        if char.isalpha():  # Check if the character is a letter
+            shifted = ord(char) + shift
+            if shifted > ord('Z'):
+                shifted -= 26
+            encrypted_text += chr(shifted)
+        # Non-alphabetic characters are ignored as per requirements
+    return encrypted_text
+
+def format_output(encoded_text):
+    # Split the encoded text into blocks of 5 characters
+    blocks = [encoded_text[i:i+5] for i in range(0, len(encoded_text), 5)]
+    # Prepare the output format with ten blocks per line
+    for i in range(0, len(blocks), 10):
+        print(' '.join(blocks[i:i+10]))
+
+if __name__ == "__main__":
+    if len(sys.argv) < 2:
+        print("Usage: python caesar_cipher.py <shift>")
+        sys.exit(1)
+
+    shift = int(sys.argv[1])
+    message = input()
+    encoded_message = caesar_cipher(message, shift)
+    format_output(encoded_message)
